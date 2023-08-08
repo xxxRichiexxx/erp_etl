@@ -26,6 +26,7 @@ def extract(
     if api_endpoint:
 
         print('Извлекаем данные из апи')
+        print('api_endpoint', api_endpoint, 'auth', auth, 'params', params, 'headers', headers)
 
         response = requests.get(
             api_endpoint,
