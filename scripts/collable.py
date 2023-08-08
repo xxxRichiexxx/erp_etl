@@ -69,12 +69,14 @@ def transform(data, column_names=None, execution_date=None):
     """Преобразование/трансформация данных."""
 
     print('ТРАНСФОРМАЦИЯ ДАННЫХ')
-    if column_names:
-        data.columns = column_names
-    
-    if execution_date:
-        data['load_date'] = execution_date.replace(day=1)
-    
+    if not data.empty:
+        if column_names:
+            data.columns = column_names
+        
+        if execution_date:
+            data['load_date'] = execution_date.replace(day=1)
+    else:
+        print('Нет новых данных для загрузки.')    
     return data
 
 
