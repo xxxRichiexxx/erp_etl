@@ -20,7 +20,7 @@ source_password = quote(source_con.password)
 source_host = source_con.host
 api_endpoint = r'http://vs01uh/erp_demo/hs/sellers'
 
-auth=(source_username, 123)
+auth=(source_username, source_password)
 
 column_names = [
         "Counterparty",
