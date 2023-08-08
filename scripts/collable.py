@@ -25,6 +25,8 @@ def extract(
     ###Если необходимо извлечь дынные из API:
     if api_endpoint:
 
+        print('Извлекаем данные из апи')
+
         response = requests.get(
             api_endpoint,
             auth=auth,
@@ -38,6 +40,8 @@ def extract(
 
     ###Если необходимо извлечь дынные из БД:
     elif source_engine:
+
+        print('Извлекаем данные из БД')
     
         path = os.path.abspath(fr'{data_type}.sql')
         
