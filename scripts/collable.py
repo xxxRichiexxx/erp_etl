@@ -34,6 +34,8 @@ def extract(
             headers=headers,
         )
 
+        response.raise_for_status()
+
         response.encoding = 'utf-8-sig'
 
         print(response.text)
