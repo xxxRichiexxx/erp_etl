@@ -141,7 +141,7 @@ def etl(
     end_date = (execution_date.replace(day=28) + dt.timedelta(days=4)) \
         .replace(day=1) - dt.timedelta(days=1)
     
-    if params is None:
+    if not params:
         params = {
             'stdate': start_date.strftime('%Y%m%d'),
             'enddate': end_date.strftime('%Y%m%d'),
