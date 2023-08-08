@@ -22,7 +22,7 @@ def extract(
 
     print('ИЗВЛЕЧЕНИЕ ДАННЫХ')
 
-    ###Если необходимо извлечь дынные из API:
+    ### Если необходимо извлечь дынные из API:
     if api_endpoint:
 
         print('Извлекаем данные из апи')
@@ -38,7 +38,7 @@ def extract(
 
         data = pd.json_normalize(response.json()[json_key])
 
-    ###Если необходимо извлечь дынные из БД:
+    ### Если необходимо извлечь дынные из БД:
     elif source_engine:
 
         print('Извлекаем данные из БД')
@@ -54,7 +54,7 @@ def extract(
             command,
             source_engine,
             dtype_backend='pyarrow',
-        )        
+        )
     
     pprint(data)
     return data
@@ -140,7 +140,7 @@ def etl(
         params = {
             'stdate': start_date.strftime('%Y%m%d'),
             'enddate': end_date.strftime('%Y%m%d'),
-            'csttp': 'fact',            
+            'csttp': 'fact',
         }
 
     data = extract(

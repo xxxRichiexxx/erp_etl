@@ -18,7 +18,7 @@ source_con = BaseHook.get_connection('erp')
 source_username = source_con.login
 source_password = quote(source_con.password)
 source_host = source_con.host
-api_endpoint = rf'http://{source_host}/erp_demo/hs/sellers'
+api_endpoint = r'http://vs01uh/erp_demo/hs/sellers'
 
 auth=(source_username, source_password)
 
