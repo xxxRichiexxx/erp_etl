@@ -36,6 +36,8 @@ def extract(
 
         response.encoding = 'utf-8-sig'
 
+        print(response.text)
+
         data = pd.json_normalize(response.json()[json_key])
 
     ### Если необходимо извлечь дынные из БД:
