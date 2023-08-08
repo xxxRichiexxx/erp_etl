@@ -89,6 +89,7 @@ with DAG(
                     op_kwargs={
                         'offset': offset,
                         'data_type': 'stage_erp_kit_sales',
+                        'api_endpoint': api_endpoint,
                         'auth': auth,
                         'column_names': column_names,
                         'json_key': 'test',
