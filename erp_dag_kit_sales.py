@@ -92,7 +92,7 @@ with DAG(
                         'api_endpoint': api_endpoint,
                         'auth': auth,
                         'column_names': column_names,
-                        'json_key': 'result',
+                        'json_key': 'test',
                         'dwh_engine': dwh_engine,
                     },
                 )
