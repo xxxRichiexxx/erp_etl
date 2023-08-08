@@ -69,7 +69,7 @@ with DAG(
         'erp_kit_sales',
         default_args=default_args,
         description='Получение данных из ERP. Продажи комплектов.',
-        start_date=dt.datetime(2023, 8, 1),
+        start_date=dt.datetime(2023, 7, 1),
         schedule_interval='@monthly',
         catchup=True,
         max_active_runs=1
