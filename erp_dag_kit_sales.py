@@ -81,17 +81,17 @@ with DAG(
 
         tasks = []
 
-        for offset in range(0,5):
+        for offset in range(0,6):
             tasks.append(
                 PythonOperator(
                     task_id=f'get_kit_sales_offset_{offset}',
                     python_callable=etl,
                     op_kwargs={
                         'offset': offset,
-                        'data_type'='stage_erp_kit_sales',
-                        'auth'=auth,
-                        'column_names'=column_names,
-                        'json_key'='test',
+                        'data_type': 'stage_erp_kit_sales',
+                        'auth': auth,
+                        'column_names': column_names,
+                        'json_key': 'test',
                         'dwh_engine': dwh_engine,
                     },
                 )
