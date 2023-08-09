@@ -47,15 +47,31 @@ SELECT
         "KitName",
         "DrawingNumberPF",
         d.id,
-        REGEXP_REPLACE("NumberOfKitsInTheApplication",  '\p{Z}', '')::int,  --------------
+        NULLIF(
+        	REGEXP_REPLACE("NumberOfKitsInTheApplication",  '\p{Z}', ''), 
+        	'')::int, 
         "Currency",
-        REPLACE(REGEXP_REPLACE("KitPrice",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
-        REPLACE(REGEXP_REPLACE("Discount",  '\p{Z}', ''), ',', '.')::NUMERIC(6,3), 
-        REPLACE(REGEXP_REPLACE("DiscountedPackagePrice",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
-        REGEXP_REPLACE("ShippedWithinTheSpecifiedPeriod",  '\p{Z}', '')::int,
-        REPLACE(REGEXP_REPLACE("Completed",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
-        REPLACE(REGEXP_REPLACE("TheAmountOfRealtionInPurchasePrices",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
-        REPLACE(REGEXP_REPLACE("Revenue",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
+        NULLIF(
+        	REPLACE(REGEXP_REPLACE("KitPrice",  '\p{Z}', ''), ',', '.'),
+        	'')::NUMERIC(11,3),
+        NULLIF(
+        	REPLACE(REGEXP_REPLACE("Discount",  '\p{Z}', ''), ',', '.'),
+        	'')::NUMERIC(6,3), 
+        NULLIF(
+        	REPLACE(REGEXP_REPLACE("DiscountedPackagePrice",  '\p{Z}', ''), ',', '.'),
+        	'')::NUMERIC(11,3),
+        NULLIF(
+        	REGEXP_REPLACE("ShippedWithinTheSpecifiedPeriod",  '\p{Z}', ''),
+        	'')::int,                       ----------------------
+        NULLIF(
+        	REPLACE(REGEXP_REPLACE("Completed",  '\p{Z}', ''), ',', '.'),
+        	'')::NUMERIC(11,3),
+        NULLIF(
+        	REPLACE(REGEXP_REPLACE("TheAmountOfRealtionInPurchasePrices",  '\p{Z}', ''), ',', '.'),
+        	'')::NUMERIC(11,3),    --------------------------
+        NULLIF(
+        	REPLACE(REGEXP_REPLACE("Revenue",  '\p{Z}', ''), ',', '.'),
+        	'')::NUMERIC(11,3),
         "Invoice",
         "Course",
         TO_DATE("NumberOfRealization", 'DD:MM:YYYY'),
