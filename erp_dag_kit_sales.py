@@ -2,6 +2,7 @@
 import sqlalchemy as sa
 from urllib.parse import quote
 import datetime as dt
+from dateutil.relativedelta import relativedelta
 
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
@@ -131,7 +132,7 @@ with DAG(
             sql='scripts/dds_erp_kit_sales.sql',
             params={
                 'delta_1': dt.timedelta(days=1),
-                'delta_2': dt.timedelta(days=4),
+                'delta_2': relativedelta(months=-6),
             }
         )
 
