@@ -13,6 +13,6 @@ SELECT DISTINCT
 FROM sttgaz.stage_erp_kit_sales AS s
 WHERE DATE_TRUNC('month', TO_DATE("ShipmentMonth", 'DD:MM:YYYY'))::date IN (
         '{{execution_date.replace(day=1)}}',
-        '{{(execution_date.replace(day=1) - params.delta).raplace(day=1)}}'
+        '{{(execution_date.replace(day=1) - params.delta_1).raplace(day=1)}}'
     )
     AND HASH(s."Country", s."CountryKode") NOT IN (SELECT * FROM sq);

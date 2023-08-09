@@ -1,6 +1,6 @@
 SELECT DROP_PARTITIONS(
     'sttgaz.dds_erp_kit_sales',
-    '{{(execution_date.replace(day=1) - params.delta).raplace(day=1)}}',
+    '{{(execution_date.replace(day=1) - params.delta_1).raplace(day=1)}}',
     '{{execution_date.replace(day=1)}}',
 );
 
@@ -65,5 +65,5 @@ LEFT JOIN sttgaz.dds_erp_сountry AS cnt
         ON HASH(s."Country", s."CountryKode") = HASH(cnt."Страна", cnt."Код страны")
 WHERE DATE_TRUNC('month', TO_DATE("ShipmentMonth", 'DD:MM:YYYY'))::date IN (
         '{{execution_date.replace(day=1)}}',
-        '{{(execution_date.replace(day=1) - params.delta).raplace(day=1)}}'
+        '{{(execution_date.replace(day=1) - params.delta_1).raplace(day=1)}}'
     )
