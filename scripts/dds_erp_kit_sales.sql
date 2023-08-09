@@ -1,7 +1,7 @@
 SELECT DROP_PARTITIONS(
     'sttgaz.dds_erp_kit_sales',
     '{{(execution_date.replace(day=1) - params.delta_1).replace(day=1)}}',
-    '{{execution_date.replace(day=1)}}',
+    '{{execution_date.replace(day=1)}}'
 );
 
 INSERT INTO sttgaz.dds_erp_kit_sales
