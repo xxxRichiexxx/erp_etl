@@ -18,7 +18,7 @@ source_con = BaseHook.get_connection('erp')
 source_username = source_con.login
 source_password = quote(source_con.password)
 source_host = source_con.host
-api_endpoint = r'http://vs01uh/erp_demo/hs/sellers'
+api_endpoint = rf'http://{source_host}/erp_demo/hs/sellers'
 
 auth=(source_username, source_password)
 
@@ -104,29 +104,38 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dds_слой') as data_to_dds:
 
-        pass
+        counterparty = VerticaOperator(
+            task_id='dds_erp_counterparty',
+            vertica_conn_id='vertica',
+            sql='scripts/dds_erp_counterparty.sql',
+            params={
+                'delta_1': dt.timedelta(days=1),
+                'delta_2': dt.timedelta(days=4),
+            }
+        )
 
-        # counteragent = VerticaOperator(
-        #     task_id='dds_isc_counteragent',
-        #     vertica_conn_id='vertica',
-        #     sql='scripts/dds_isc_counteragent_pt_2.sql',
-        #     params={
-        #         'delta_1': dt.timedelta(days=1),
-        #         'delta_2': dt.timedelta(days=4),
-        #     }
-        # )
+        сountry = VerticaOperator(
+            task_id='dds_erp_сountry',
+            vertica_conn_id='vertica',
+            sql='scripts/dds_erp_сountry.sql',
+            params={
+                'delta_1': dt.timedelta(days=1),
+                'delta_2': dt.timedelta(days=4),
+            }
+        )
 
-        # orders = VerticaOperator(
-        #     task_id='dds_isc_orders',
-        #     vertica_conn_id='vertica',
-        #     sql='scripts/dds_isc_orders.sql',
-        #     params={
-        #         'delta_1': dt.timedelta(days=1),
-        #         'delta_2': dt.timedelta(days=248),
-        #     }
-        # )
 
-        # counteragent >> orders
+        kit_sales = VerticaOperator(
+            task_id='dds_erp_kit_sales',
+            vertica_conn_id='vertica',
+            sql='scripts/dds_erp_kit_sales.sql',
+            params={
+                'delta_1': dt.timedelta(days=1),
+                'delta_2': dt.timedelta(days=4),
+            }
+        )
+
+        [counterparty, сountry] >> kit_sales
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 

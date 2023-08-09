@@ -9,6 +9,7 @@ INSERT INTO sttgaz.dds_erp_kit_sales
 	"Контрагент ID",
         "Договор",
         "Договор ID",
+        "Страна ID",
         "Номер приложения",
         "Месяц контрактации",
         "Месяц отгрузки",
@@ -35,6 +36,7 @@ SELECT
         c.id,
         "Treaty",
         "TreatyID",
+        cnt.id
         "ApplicationNo",
         TO_DATE("ApplicationContractingMonth", 'DD:MM:YYYY'),
         TO_DATE("ShipmentMonth", 'DD:MM:YYYY'),
@@ -59,6 +61,8 @@ SELECT
 FROM sttgaz.stage_erp_kit_sales AS s
 LEFT JOIN sttgaz.dds_erp_counterparty AS c 
         ON s.CounterpartyID = c.CounterpartyID
+LEFT JOIN sttgaz.dds_erp_сountry AS cnt
+        ON HASH(s."Country", s."CountryKode") = HASH(cnt."Страна", cnt."Код страны")
 WHERE DATE_TRUNC('month', TO_DATE("ShipmentMonth", 'DD:MM:YYYY'))::date IN (
         '{{execution_date.replace(day=1)}}',
         '{{(execution_date.replace(day=1) - params.delta).raplace(day=1)}}'

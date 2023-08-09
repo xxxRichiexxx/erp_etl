@@ -5,6 +5,8 @@ CREATE TABLE sttgaz.stage_erp_kit_sales(
         "CounterpartyID" varchar(1000),
         "Treaty" varchar(1000),
         "TreatyID" varchar(1000),
+        "Country" varchar(1000),
+        "CountryKode" varchar(1000),
         "ApplicationNo" varchar(1000),
         "ApplicationContractingMonth" varchar(200),
         "ShipmentMonth" varchar(200),
@@ -35,11 +37,29 @@ PARTITION BY DATE_TRUNC('month', load_date);
 
 
 ------------------------------DDS-----------------------------------------
+
+DROP TABLE IF EXISTS sttgaz.dds_erp_counterparty;
+CREATE TABLE sttgaz.dds_erp_counterparty (
+	id AUTO_INCREMENT PRIMARY KEY,
+	"CounterpartyID" varchar(1000),
+	"Контрагент" varchar(1000),
+        ts timestamp
+);
+
+DROP TABLE IF EXISTS sttgaz.dds_erp_сountry;
+CREATE TABLE sttgaz.dds_erp_сountry (
+	id AUTO_INCREMENT PRIMARY KEY,
+        "Страна" varchar(1000),
+        "Код страны" varchar(1000),
+        ts timestamp
+);
+
 DROP TABLE IF EXISTS sttgaz.dds_erp_kit_sales;
 CREATE TABLE sttgaz.dds_erp_kit_sales(
-	"Контрагент ID" INT REFERENCES sttgaz.dds_erp_counterparty(ID),
+	"Контрагент ID" INT REFERENCES sttgaz.dds_erp_counterparty(id),
         "Договор" varchar(1000),
         "Договор ID" varchar(1000),
+        "Страна ID" INT REFERENCES sttgaz.dds_erp_сountry(id),
         "Номер приложения" varchar(1000),
         "Месяц контрактации" date,
         "Месяц отгрузки" date,
@@ -66,11 +86,4 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
 ORDER BY "Месяц отгрузки"
 PARTITION BY DATE_TRUNC('month', "Месяц отгрузки");
 
-DROP TABLE IF EXISTS sttgaz.dds_erp_counterparty;
-CREATE TABLE sttgaz.dds_erp_counterparty (
-	id AUTO_INCREMENT PRIMARY KEY,
-	"CounterpartyID" varchar(1000),
-	"Контрагент" varchar(1000),
-        ts timestamp
-);
    	
