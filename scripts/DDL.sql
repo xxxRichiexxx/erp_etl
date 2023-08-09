@@ -77,7 +77,7 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
         "Чертежный номер комплекта" varchar(1000),
         "Наименование комплекта" varchar(1000),
         "Чертежный номер полуфабриката кабины" varchar(1000),
-        "Дивизион ID" INT REFERENCES sttgaz.dds_erp_division(id)
+        "Дивизион ID" INT REFERENCES sttgaz.dds_erp_division(id),
         "Количество комплектов в приложении" int,
         "Валюта. Код" varchar(100),
         "Цена комплекта" numeric(11,3),
