@@ -5,8 +5,6 @@ CREATE TABLE sttgaz.stage_erp_kit_sales(
         "CounterpartyID" varchar(1000),
         "Treaty" varchar(1000),
         "TreatyID" varchar(1000),
-        "Country" varchar(1000),
-        "CountryKode" varchar(1000),
         "ApplicationNo" varchar(1000),
         "ApplicationContractingMonth" varchar(200),
         "ShipmentMonth" varchar(200),
@@ -14,6 +12,7 @@ CREATE TABLE sttgaz.stage_erp_kit_sales(
         "KitDrawingNumber" varchar(1000),
         "KitName" varchar(1000),
         "DrawingNumberPF" varchar(1000),
+        "Division" varchar(200),
         "NumberOfKitsInTheApplication" varchar(1000),---------------------------------
         "Currency" varchar(100),
         "KitPrice" varchar(1000), -----------------------------------------------------
@@ -24,6 +23,8 @@ CREATE TABLE sttgaz.stage_erp_kit_sales(
         "TheAmountOfRealtionInPurchasePrices" varchar(1000),------------------------------------
         "Revenue" varchar(1000),---------------------------------
         "Invoice" varchar(1000),------------------------
+        "Country" varchar(1000),
+        "CountryKode" varchar(1000),
         "PPSDate" varchar(200),
         "Course" varchar(1000),
         "NumberOfRealization" varchar(200),
@@ -54,6 +55,15 @@ CREATE TABLE sttgaz.dds_erp_сountry (
         ts timestamp
 );
 
+
+DROP TABLE IF EXISTS sttgaz.dds_erp_division;
+CREATE TABLE sttgaz.dds_erp_division (
+	id AUTO_INCREMENT PRIMARY KEY,
+        "Наименование" varchar(1000),
+        ts timestamp
+);
+
+
 DROP TABLE IF EXISTS sttgaz.dds_erp_kit_sales;
 CREATE TABLE sttgaz.dds_erp_kit_sales(
 	"Контрагент ID" INT REFERENCES sttgaz.dds_erp_counterparty(id),
@@ -67,6 +77,7 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
         "Чертежный номер комплекта" varchar(1000),
         "Наименование комплекта" varchar(1000),
         "Чертежный номер полуфабриката кабины" varchar(1000),
+        "Дивизион ID" INT REFERENCES sttgaz.dds_erp_division(id)
         "Количество комплектов в приложении" int,
         "Валюта. Код" varchar(100),
         "Цена комплекта" numeric(11,3),

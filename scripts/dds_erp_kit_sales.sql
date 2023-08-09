@@ -17,6 +17,7 @@ INSERT INTO sttgaz.dds_erp_kit_sales
         "Чертежный номер комплекта",
         "Наименование комплекта",
         "Чертежный номер полуфабриката кабины",
+        "Дивизион",
         "Количество комплектов в приложении",
         "Валюта. Код",
         "Цена комплекта",
@@ -45,6 +46,7 @@ SELECT
         "KitDrawingNumber",
         "KitName",
         "DrawingNumberPF",
+        d.id,
         REGEXP_REPLACE("NumberOfKitsInTheApplication",  '\p{Z}', '')::int,  --------------
         "Currency",
         REPLACE(REGEXP_REPLACE("KitPrice",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
@@ -65,7 +67,8 @@ LEFT JOIN sttgaz.dds_erp_counterparty AS c
         ON s.CounterpartyID = c.CounterpartyID
 LEFT JOIN sttgaz.dds_erp_сountry AS cnt
         ON HASH(s."Country", s."CountryKode") = HASH(cnt."Страна", cnt."Код страны")
-WHERE DATE_TRUNC('month', TO_DATE("ShipmentMonth", 'DD:MM:YYYY'))::date IN (
-        '{{execution_date.replace(day=1)}}',
-        '{{(execution_date.replace(day=1) - params.delta_1).replace(day=1)}}'
-    )
+LEFT JOIN sttgaz.dds_erp_division AS d
+        ON s.Division = d."Наименование"
+WHERE (DATE_TRUNC('month', "load_date")::date BETWEEN
+        '{{execution_date.replace(day=1) - params.delta_2}}'
+        AND '{{execution_date.replace(day=1)}}')
