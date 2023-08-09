@@ -38,8 +38,12 @@ PARTITION BY DATE_TRUNC('month', load_date);
 
 
 ------------------------------DDS-----------------------------------------
-
+DROP TABLE IF EXISTS sttgaz.dds_erp_kit_sales;
 DROP TABLE IF EXISTS sttgaz.dds_erp_counterparty;
+DROP TABLE IF EXISTS sttgaz.dds_erp_сountry;
+DROP TABLE IF EXISTS sttgaz.dds_erp_division;
+
+
 CREATE TABLE sttgaz.dds_erp_counterparty (
 	id AUTO_INCREMENT PRIMARY KEY,
 	"CounterpartyID" varchar(1000),
@@ -47,7 +51,7 @@ CREATE TABLE sttgaz.dds_erp_counterparty (
         ts timestamp
 );
 
-DROP TABLE IF EXISTS sttgaz.dds_erp_сountry;
+
 CREATE TABLE sttgaz.dds_erp_сountry (
 	id AUTO_INCREMENT PRIMARY KEY,
         "Страна" varchar(1000),
@@ -56,7 +60,6 @@ CREATE TABLE sttgaz.dds_erp_сountry (
 );
 
 
-DROP TABLE IF EXISTS sttgaz.dds_erp_division;
 CREATE TABLE sttgaz.dds_erp_division (
 	id AUTO_INCREMENT PRIMARY KEY,
         "Наименование" varchar(1000),
@@ -64,7 +67,6 @@ CREATE TABLE sttgaz.dds_erp_division (
 );
 
 
-DROP TABLE IF EXISTS sttgaz.dds_erp_kit_sales;
 CREATE TABLE sttgaz.dds_erp_kit_sales(
 	"Контрагент ID" INT REFERENCES sttgaz.dds_erp_counterparty(id),
         "Договор" varchar(1000),
