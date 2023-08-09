@@ -27,6 +27,8 @@ column_names = [
         "CounterpartyID",
         "Treaty",
         "TreatyID",
+        "Country",
+        "CountryKode",
         "ApplicationNo",
         "ApplicationContractingMonth",
         "ShipmentMonth",
