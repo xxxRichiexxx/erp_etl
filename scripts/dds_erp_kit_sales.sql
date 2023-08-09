@@ -36,7 +36,7 @@ SELECT
         c.id,
         "Treaty",
         "TreatyID",
-        cnt.id
+        cnt.id,
         "ApplicationNo",
         TO_DATE("ApplicationContractingMonth", 'DD:MM:YYYY'),
         TO_DATE("ShipmentMonth", 'DD:MM:YYYY'),
