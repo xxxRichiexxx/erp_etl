@@ -50,7 +50,7 @@ SELECT
         REPLACE(REGEXP_REPLACE("Discount",  '\p{Z}', ''), ',', '.')::NUMERIC(6,3), 
         REPLACE(REGEXP_REPLACE("DiscountedPackagePrice",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
         REGEXP_REPLACE("ShippedWithinTheSpecifiedPeriod",  '\p{Z}', '')::int,
-        REGEXP_REPLACE("Completed",  '\p{Z}', '')::int,
+        REPLACE(REGEXP_REPLACE("Completed",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
         REPLACE(REGEXP_REPLACE("TheAmountOfRealtionInPurchasePrices",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
         REPLACE(REGEXP_REPLACE("Revenue",  '\p{Z}', ''), ',', '.')::NUMERIC(11,3),
         "Invoice",
