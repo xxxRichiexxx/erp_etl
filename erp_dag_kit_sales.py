@@ -112,7 +112,7 @@ with DAG(
             sql='scripts/dds_erp_counterparty.sql',
             params={
                 'delta_1': dt.timedelta(days=1),
-                'delta_2': relativedelta(months=-6),
+                'delta_2': relativedelta(months=-5),
             }
         )
 
@@ -122,7 +122,7 @@ with DAG(
             sql='scripts/dds_erp_сountry.sql',
             params={
                 'delta_1': dt.timedelta(days=1),
-                'delta_2': relativedelta(months=-6),
+                'delta_2': relativedelta(months=-5),
             }
         )
 
@@ -133,7 +133,7 @@ with DAG(
             sql='scripts/dds_erp_kit_sales.sql',
             params={
                 'delta_1': dt.timedelta(days=1),
-                'delta_2': relativedelta(months=-6),
+                'delta_2': relativedelta(months=-5),
             }
         )
 
