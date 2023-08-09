@@ -70,5 +70,5 @@ LEFT JOIN sttgaz.dds_erp_сountry AS cnt
 LEFT JOIN sttgaz.dds_erp_division AS d
         ON s.Division = d."Наименование"
 WHERE (DATE_TRUNC('month', "load_date")::date BETWEEN
-        '{{execution_date.replace(day=1) - params.delta_2}}'
+        '{{execution_date.replace(day=1) + params.delta_2}}'
         AND '{{execution_date.replace(day=1)}}')
