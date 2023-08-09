@@ -81,7 +81,8 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
         "Валюта. Курс" varchar(1000),
         "Счет-фактура Дата" date,
         "Торг12 Номер" varchar(1000),
-        "TheAmountOfRealPlacer" varchar(1000)
+        "TheAmountOfRealPlacer" varchar(1000),
+        "Период" date
 )
 ORDER BY "Месяц отгрузки"
 PARTITION BY DATE_TRUNC('month', "Месяц отгрузки");

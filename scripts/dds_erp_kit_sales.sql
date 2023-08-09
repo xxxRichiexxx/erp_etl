@@ -30,7 +30,8 @@ INSERT INTO sttgaz.dds_erp_kit_sales
         "Валюта. Курс",
         "Счет-фактура Дата",
         "Торг12 Номер",
-        "TheAmountOfRealPlacer"
+        "TheAmountOfRealPlacer",
+        "Период"
 )
 SELECT
         c.id,
@@ -57,7 +58,8 @@ SELECT
         "Course",
         TO_DATE("NumberOfRealization", 'DD:MM:YYYY'),
         "NumberRealization",
-        "TheAmountOfRealPlacer"
+        "TheAmountOfRealPlacer",
+        "load_date"
 FROM sttgaz.stage_erp_kit_sales AS s
 LEFT JOIN sttgaz.dds_erp_counterparty AS c 
         ON s.CounterpartyID = c.CounterpartyID
