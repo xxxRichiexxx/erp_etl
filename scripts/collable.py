@@ -39,8 +39,6 @@ def extract(
 
         response.encoding = 'utf-8-sig'
 
-        print(response.text)
-
         data = pd.json_normalize(response.json()[json_key])
 
     ### Если необходимо извлечь дынные из БД:
@@ -69,6 +67,8 @@ def transform(data, column_names=None, execution_date=None):
     """Преобразование/трансформация данных."""
 
     print('ТРАНСФОРМАЦИЯ ДАННЫХ')
+    print('Исходные поля:',  data.columns)
+    
     if not data.empty:
         if column_names:
             data.columns = column_names
