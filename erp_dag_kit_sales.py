@@ -126,6 +126,16 @@ with DAG(
             }
         )
 
+        division = VerticaOperator(
+            task_id='dds_erp_division',
+            vertica_conn_id='vertica',
+            sql='scripts/dds_erp_division.sql',
+            params={
+                'delta_1': dt.timedelta(days=1),
+                'delta_2': relativedelta(months=-5),
+            }
+        )
+
 
         kit_sales = VerticaOperator(
             task_id='dds_erp_kit_sales',
@@ -137,7 +147,7 @@ with DAG(
             }
         )
 
-        [counterparty, сountry] >> kit_sales
+        [counterparty, сountry, division] >> kit_sales
 
     with TaskGroup('Загрузка_данных_в_dm_слой') as data_to_dm:
 
