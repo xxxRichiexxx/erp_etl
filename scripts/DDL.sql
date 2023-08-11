@@ -32,7 +32,7 @@ CREATE TABLE sttgaz.stage_erp_kit_sales(
         "TheAmountOfRealPlacer" varchar(1000),
         "load_date" date
 )
-ORDER BY ShipmentMonth
+ORDER BY "ShipmentMonth"
 PARTITION BY DATE_TRUNC('month', load_date);
 
 

@@ -163,9 +163,14 @@ def etl(
 
     if column_to_check:
 
+        try:
+            value=sum(data[column_to_check])
+        except KeyError:
+            value=0
+
         context['ti'].xcom_push(
             key=data_type,
-            value=sum(data[column_to_check])
+            value=value
         )
 
     load(data, dwh_engine, data_type, start_date)
