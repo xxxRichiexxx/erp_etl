@@ -169,7 +169,7 @@ def etl(
             value=0
 
         context['ti'].xcom_push(
-            key=f'{data_type}_{offset}',
+            key=data_type,
             value=value
         )
 
