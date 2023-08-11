@@ -3,8 +3,6 @@ import datetime as dt
 import requests
 from pprint import pprint
 import os
-import sqlalchemy as sa
-from urllib.parse import quote
 
 
 def extract(
@@ -122,6 +120,7 @@ def etl(
     dwh_engine=None,
     offset=None,
     column_names=None,
+    column_to_check=None,
     **context
 ):
     """Запускаем ETL-процесс для заданного типа данных."""
@@ -137,7 +136,6 @@ def etl(
                 .replace(month = month, day=1)
     else:
         execution_date = context['execution_date'].date()
-        # execution_date = dt.date(2023,6,13)
 
     start_date = execution_date.replace(day=1)
     end_date = (execution_date.replace(day=28) + dt.timedelta(days=4)) \
@@ -162,89 +160,12 @@ def etl(
         end_date,
     )
     data = transform(data, column_names, start_date)  
-    # if data_type == 'sales': 
-    #     context['ti'].xcom_push(
-    #         key='SoldAtRetail',
-    #         value=sum(data['SoldAtRetail'])
-    #     )
-    #     context['ti'].xcom_push(
-    #         key='SoldToIndividuals',
-    #         value=sum(data['SoldToIndividuals'])
-    #     )
-    #     context['ti'].xcom_push(
-    #         key="BalanceAtBeginningOfPeriodOnRoad",
-    #         value=sum(data["BalanceAtBeginningOfPeriodOnRoad"])
-    #     )
-    #     context['ti'].xcom_push(
-    #         key="BalanceAtEndOfPeriodOnRoad",
-    #         value=sum(data["BalanceAtEndOfPeriodOnRoad"])
-    #     )
-    # elif data_type == 'realization':
-    #     context['ti'].xcom_push(
-    #         key='RealizationCount',
-    #         value=sum(data['Availability'])
-    #     )
-    # elif data_type == 'orders':
-    #     context['ti'].xcom_push(
-    #         key=f'OrdersCount',
-    #         value=sum(data['quantity'])
-    #     )
+
+    if column_to_check:
+
+        context['ti'].xcom_push(
+            key=data_type,
+            value=sum(data[column_to_check])
+        )
 
     load(data, dwh_engine, data_type, start_date)
-
-
-
-# api_endpoint = r'http://vs01uh/erp_demo/hs/sellers'
-
-# params = {
-#     'stdate': 20230501,
-#     'enddate': 20230531,
-#     'csttp': 'fact',
-# }
-
-# auth=('get','123')
-
-# column_names = [
-#         "Counterparty",
-#         "CounterpartyID",
-#         "Treaty",
-#         "TreatyID",
-#         "ApplicationNo",
-#         "ApplicationContractingMonth",
-#         "ShipmentMonth",
-#         "Equipment",
-#         "KitDrawingNumber",
-#         "KitName",
-#         "DrawingNumberPF",
-#         "NumberOfKitsInTheApplication",
-#         "Currency",
-#         "KitPrice",
-#         "Discount",
-#         "DiscountedPackagePrice",
-#         "ShippedWithinTheSpecifiedPeriod",
-#         "Completed",
-#         "TheAmountOfRealtionInPurchasePrices",
-#         "Revenue",
-#         "Invoice",
-#         "PPSDate",
-#         "Course",
-#         "NumberOfRealization",
-#         "NumberRealization",
-#         "TheAmountOfRealPlacer",
-# ]
-
-# ps = quote('s@vy7hSA')
-
-# dwh_engine = sa.create_engine(
-#     f'vertica+vertica_python://shveynikovab:{ps}@vs-da-vertica:5433/sttgaz'
-# )
-
-# etl(
-#     data_type='stage_erp_kit_sales',
-#     api_endpoint=api_endpoint,
-#     params=params,
-#     auth=auth,
-#     column_names=column_names,
-#     dwh_engine=dwh_engine,
-#     json_key='test'
-# )
