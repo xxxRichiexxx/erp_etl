@@ -164,6 +164,7 @@ def etl(
     if column_to_check:
 
         try:
+            data[column_to_check] = data[column_to_check].astype(float)
             value=sum(data[column_to_check])
         except KeyError:
             value=0
