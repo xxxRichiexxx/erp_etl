@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import datetime as dt
 import requests
 from pprint import pprint
@@ -161,10 +162,14 @@ def etl(
     )
     data = transform(data, column_names, start_date)  
 
+    load(data, dwh_engine, data_type, start_date)
+
     if column_to_check:
 
         try:
-            data[column_to_check] = data[column_to_check].astype(float)
+            data[column_to_check] = data[column_to_check].str.strip()
+            data=data.replace(r'^\s*$', np.nan, regex=True)
+            data[column_to_check]= data[column_to_check].fillna(0).astype(np.int64)
             value=sum(data[column_to_check])
         except KeyError:
             value=0
@@ -173,5 +178,3 @@ def etl(
             key=data_type,
             value=value
         )
-
-    load(data, dwh_engine, data_type, start_date)
