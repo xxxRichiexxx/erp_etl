@@ -145,6 +145,13 @@ with DAG(
                     vertica_conn_id='vertica',
                     sql='scripts/dm_erp_kit_sales_v.sql',
                 )
+
+        dm_erp_kit_sales_with_classifier_v = VerticaOperator(
+                    task_id='dm_erp_kit_sales_with_classifier_v',
+                    vertica_conn_id='vertica',
+                    sql='scripts/dm_erp_kit_sales_with_classifier_v.sql',
+                )
+        [dm_erp_kit_sales_v, dm_erp_kit_sales_with_classifier_v]
         
     with TaskGroup('Проверки') as data_checks:
 

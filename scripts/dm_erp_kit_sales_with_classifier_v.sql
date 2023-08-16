@@ -44,6 +44,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 	LEFT JOIN sttgaz.stage_isc_nomenclature_guide n
 		ON ks."Чертежный номер комплекта" = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A') 
 			AND n.ManufactureModel <> ''
+			AND n.Manufacture = 'ГАЗ ПАО'
 	LEFT JOIN sttgaz.dm_isc_classifier_v c 
 		ON REGEXP_REPLACE(n.Code65, '^А', 'A') = REGEXP_REPLACE(c.product_name, '^А', 'A') 
 			AND c.property_name = 'Подробный по дивизионам (с 2022 г)'
