@@ -157,7 +157,16 @@ with DAG(
                     }
                 )
         
-        [dm_erp_kit_sales_sheck]
+        dm_erp_kit_sales_with_classifier = VerticaOperator(
+                    task_id='dm_erp_kit_sales_with_classifier_sheck',
+                    vertica_conn_id='vertica',
+                    sql='scripts/dm_erp_kit_sales_with_classifier_sheck.sql',
+                    params={
+                        'dm': 'dm_erp_kit_sales_with_classifier_v',
+                    }
+                )
+        
+        [dm_erp_kit_sales_sheck, dm_erp_kit_sales_with_classifier]
 
     end = DummyOperator(task_id='Конец')
 
