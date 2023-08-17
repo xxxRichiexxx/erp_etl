@@ -98,6 +98,6 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
         "Период" date
 )
 ORDER BY "Месяц отгрузки"
-PARTITION BY DATE_TRUNC('month', "Месяц отгрузки");
+PARTITION BY DATE_TRUNC('month', "Период");
 
    	
