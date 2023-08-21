@@ -36,6 +36,35 @@ ORDER BY "ShipmentMonth"
 PARTITION BY DATE_TRUNC('month', load_date);
 
 
+DROP TABLE IF EXISTS sttgaz.stage_ADABAS_kit_sales;
+CREATE TABLE sttgaz.stage_ADABAS_kit_sales(
+        "Counterparty" varchar(1000),
+        "Treaty" varchar(1000),
+        "ApplicationNo" varchar(1000),
+        "ShipmentMonth" varchar(200),
+        "KitNo" int,
+        "Equipment" varchar(1000),
+        "KitDrawingNumber" varchar(1000),
+        "DrawingNumberPF" varchar(1000),
+        "Color" varchar(200),
+        "Quantity" numeric(6,3),
+        "Currency" varchar(100),
+        "Course" varchar(1000),
+        "KitPrice" numeric(11,3), 
+        "Discount" numeric(6,3),
+        "DiscountedPackagePrice" numeric(11,3),
+        "PFCabinsQuantity" int,
+        "AmountOfRealtionPFCabins" numeric(11,3), 
+        "AmountOfRealtionPlacer" numeric(11,3),
+        "Torg12No" varchar(1000),
+        "Torg12Date" varchar(1000),
+        "InvoiceNo" varchar(1000),
+        "InvoiceDate" varchar(1000),
+        "Specification" varchar(1000),
+        "TheAmountOfRealtionInPurchasePrices" numeric(11,3),
+        "PPSDate" varchar(1000)
+);
+
 
 ------------------------------DDS-----------------------------------------
 DROP TABLE IF EXISTS sttgaz.dds_erp_kit_sales;
@@ -80,12 +109,12 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
         "Наименование комплекта" varchar(1000),
         "Чертежный номер полуфабриката кабины" varchar(1000),
         "Дивизион ID" INT REFERENCES sttgaz.dds_erp_division(id),
-        "Количество комплектов в приложении" int,
+        "Количество комплектов в приложении" int,    
         "Валюта. Код" varchar(100),
         "Цена комплекта" numeric(11,3),
         "Скидка (процент)" numeric(6,3), 
         "Цена комплекта с учетом скидки" numeric(11,3),
-        "Отгружено за указанный период" int,
+        "Отгружено за указанный период" int,   
         "Процент выполнения" numeric(11,3),
         "Сумма реал-ции в приходных ценах, руб." numeric(11,3),
         "Выручка" numeric(11,3),
