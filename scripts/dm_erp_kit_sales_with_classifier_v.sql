@@ -45,6 +45,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 		ON REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A') = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A') 
 			AND n.ManufactureModel <> ''
 			AND UPPER(REPLACE(n.Manufacture, ' ', '')) = 'ГАЗПАО'
+			AND n.Name <>'Комплект автомобил'
 			AND n.load_date = DATE_TRUNC('MONTH', NOW())::date
 	LEFT JOIN sttgaz.dm_isc_classifier_v c 
 		ON REGEXP_REPLACE(n.Code65, '^А', 'A') = REGEXP_REPLACE(c.product_name, '^А', 'A') 
