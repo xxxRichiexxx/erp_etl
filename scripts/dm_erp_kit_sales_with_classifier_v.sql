@@ -42,7 +42,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 			END AS "Завод"
 	FROM sttgaz.dm_erp_kit_sales_v ks
 	LEFT JOIN sttgaz.stage_isc_nomenclature_guide n
-		ON ks."Чертежный номер комплекта" = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A') 
+		ON REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A') = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A') 
 			AND n.ManufactureModel <> ''
 			AND UPPER(REPLACE(n.Manufacture, ' ', '')) = 'ГАЗПАО'
 			AND n.load_date = DATE_TRUNC('MONTH', NOW())::date
@@ -51,4 +51,4 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 			AND c.property_name = 'Подробный по дивизионам (с 2022 г)';
 
 GRANT SELECT ON TABLE sttgaz.dm_erp_kit_sales_with_classifier_v TO PowerBI_Integration WITH GRANT OPTION;
-COMMENT ON VIEW sttgaz.dm_erp_kit_sales_with_classifier_v IS 'Реализация автокомплектов. Витрина данных с посчитанными метриками.';	
+COMMENT ON VIEW sttgaz.dm_erp_kit_sales_with_classifier_v IS 'Реализация автокомплектов. Витрина данных с посчитанными метриками и классификатором.';	
