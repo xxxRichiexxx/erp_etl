@@ -44,7 +44,8 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 			END AS "Завод"
 	FROM sttgaz.dm_erp_kit_sales_v ks
 	LEFT JOIN sttgaz.stage_isc_nomenclature_guide n
-		ON REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A') = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A') 
+		ON (REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', '') = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A')
+			OR REPLACE(REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', ''), '-00', '-') = REGEXP_REPLACE(n.Code65 , '^А', 'A'))
 			AND n.ManufactureModel <> ''
 			AND UPPER(REPLACE(n.Manufacture, ' ', '')) = 'ГАЗПАО'
 			AND n.Name <>'Комплект автомобил'

@@ -75,35 +75,35 @@ source_data AS(
 	LEFT JOIN Counterparty_Country USING (Counterparty)
 )
 SELECT
-	c.id  															AS "Контрагент ID",---
-	Treaty															AS "Договор",----
-	NULL 															AS "Договор ID",----
-	cnt.id 															AS "Страна ID",----
-	ApplicationNo													AS "Номер приложения",----
-	NULL 															AS "Месяц контрактации",----
-	TO_DATE(ShipmentMonth, 'MM.YYYY')								AS "Месяц отгрузки", ------------------------Ispravit
-	Equipment  														AS "Комплектация (вариант сборки)",---
-	REPLACE(DrawingNumberPF, ' ', '')								AS "Чертежный номер комплекта",----
-	REGEXP_REPLACE(KitDrawingNumber, '^[A-ZА-Я0-9]{6}-\d{7} ', '')	AS "Наименование комплекта",-----
-	REPLACE(DrawingNumberPF, ' ', '')								AS "Чертежный номер полуфабриката кабины",-----
-	NULL 															AS "Дивизион ID",-----
-	Quantity														AS "Количество комплектов в приложении",-----
-	Currency														AS "Валюта. Код",----
-	KitPrice														AS "Цена комплекта",-----
-	Discount														AS "Скидка (процент)",--------
-	DiscountedPackagePrice 											AS "Цена комплекта с учетом скидки",----
-	PFCabinsQuantity												AS "Отгружено за указанный период",-------
-	ROUND(100*PFCabinsQuantity/Quantity, 0)							AS "Процент выполнения",------
-	TheAmountOfRealtionInPurchasePrices								AS "Сумма реал-ции в приходных ценах, руб.",-----
+	c.id  																AS "Контрагент ID",---
+	Treaty																AS "Договор",----
+	NULL 																AS "Договор ID",----
+	cnt.id 																AS "Страна ID",----
+	ApplicationNo														AS "Номер приложения",----
+	NULL 																AS "Месяц контрактации",----
+	TO_DATE(ShipmentMonth, 'MM.YYYY')									AS "Месяц отгрузки", ------------------------Ispravit
+	Equipment  															AS "Комплектация (вариант сборки)",---
+	REGEXP_SUBSTR(KitDrawingNumber, '^[A-ZА-Я0-9]{3,6}-\d{7}')			AS "Чертежный номер комплекта",----
+	REGEXP_REPLACE(KitDrawingNumber, '^[A-ZА-Я0-9]{3,6}-\d{7} ', '')	AS "Наименование комплекта",-----
+	REPLACE(DrawingNumberPF, ' ', '')									AS "Чертежный номер полуфабриката кабины",-----
+	NULL 																AS "Дивизион ID",-----
+	Quantity															AS "Количество комплектов в приложении",-----
+	Currency															AS "Валюта. Код",----
+	KitPrice															AS "Цена комплекта",-----
+	Discount															AS "Скидка (процент)",--------
+	DiscountedPackagePrice 												AS "Цена комплекта с учетом скидки",----
+	PFCabinsQuantity													AS "Отгружено за указанный период",-------
+	ROUND(100*PFCabinsQuantity/Quantity, 0)								AS "Процент выполнения",------
+	TheAmountOfRealtionInPurchasePrices									AS "Сумма реал-ции в приходных ценах, руб.",-----
 	AmountOfRealtionPFCabins + AmountOfRealtionPlacer 
-		- TheAmountOfRealtionInPurchasePrices						AS "Выручка",--------
-	InvoiceNo														AS "Счет-фактура Номер",--------
-	TO_DATE(Torg12Date, 'DD.MM.YYYY')								AS "торг 12 дата",
-	Course															AS "Валюта. Курс",---------
-	TO_DATE(InvoiceDate, 'DD.MM.YYYY')								AS "Счет-фактура Дата",
-	Torg12No														AS "Торг12 Номер",
-	AmountOfRealtionPlacer											AS "TheAmountOfRealPlacer",
-	TO_DATE(ShipmentMonth, 'MM.YYYY')								AS "Период" -----------------------------Ispravit
+		- TheAmountOfRealtionInPurchasePrices							AS "Выручка",--------
+	InvoiceNo															AS "Счет-фактура Номер",--------
+	TO_DATE(Torg12Date, 'DD.MM.YYYY')									AS "торг 12 дата",
+	Course																AS "Валюта. Курс",---------
+	TO_DATE(InvoiceDate, 'DD.MM.YYYY')									AS "Счет-фактура Дата",
+	Torg12No															AS "Торг12 Номер",
+	AmountOfRealtionPlacer												AS "TheAmountOfRealPlacer",
+	TO_DATE(ShipmentMonth, 'MM.YYYY')									AS "Период" -----------------------------Ispravit
 FROM source_data AS d
 LEFT JOIN sttgaz.dds_erp_counterparty AS c 
 	ON d.Counterparty = c.Контрагент 
