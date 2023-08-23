@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 DROP VIEW IF EXISTS sttgaz.dm_erp_kit_sales_v;
 CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_v AS
 WITH 
@@ -94,3 +96,5 @@ WHERE "Реализовано" IS NOT NULL
 
 GRANT SELECT ON TABLE sttgaz.dm_erp_kit_sales_v TO PowerBI_Integration WITH GRANT OPTION;
 COMMENT ON VIEW sttgaz.dm_erp_kit_sales_v IS 'Реализация автокомплектов. Витрина данных с посчитанными метриками.';	
+
+COMMIT TRANSACTION;
