@@ -1,4 +1,4 @@
-BEGIN TRANSACTION:
+BEGIN TRANSACTION;
 
 DROP VIEW IF EXISTS sttgaz.dm_erp_kit_sales_with_classifier_v;
 CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
