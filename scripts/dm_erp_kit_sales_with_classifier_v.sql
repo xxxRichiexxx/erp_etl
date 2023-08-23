@@ -1,3 +1,5 @@
+BEGIN TRANSACTION:
+
 DROP VIEW IF EXISTS sttgaz.dm_erp_kit_sales_with_classifier_v;
 CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 	SELECT
@@ -53,3 +55,5 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 
 GRANT SELECT ON TABLE sttgaz.dm_erp_kit_sales_with_classifier_v TO PowerBI_Integration WITH GRANT OPTION;
 COMMENT ON VIEW sttgaz.dm_erp_kit_sales_with_classifier_v IS 'Реализация автокомплектов. Витрина данных с посчитанными метриками и классификатором.';	
+
+COMMIT TRANSACTION;
