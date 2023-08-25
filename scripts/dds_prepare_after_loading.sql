@@ -40,7 +40,7 @@ WITH
 				WHEN "Counterparty" = 'ТОО "СемАЗ", БИН-060240015888' THEN 'СемАЗ ТОО, БИН-060240015888'
 				WHEN "Counterparty" = 'ТОО "Daewoo Bus Kazakhstan", БИН-070140000967' THEN 'Daewoo Bus Kazakhstan, БИН-070140000967 ТОО'
 				WHEN "Counterparty" = 'ООО "АЗЕРМАШ ПАРК"' THEN 'АЗЕРМАШ ПАРК ООО'
-				ELSE '??????'
+				ELSE "Counterparty"
 			END	AS "Counterparty",
 		        "Treaty",
 		        "ApplicationNo",

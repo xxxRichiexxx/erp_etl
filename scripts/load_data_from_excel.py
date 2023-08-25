@@ -1,9 +1,14 @@
 import pandas as pd
 import sqlalchemy as sa
 from urllib.parse import quote
+import numpy as np
 
 
-data = pd.read_excel(r"C:\Users\shveynikovab\Documents\Факт реализации автокомплектов за 7 мес 2022.xlsx", sheet_name = 'Лист1 (2)')
+data = pd.read_excel(r"C:\Users\shveynikovab\Desktop\Факт реализации автокомплектов за 7 мес 2022.xlsx",
+                     sheet_name = 'Лист1 (2)',
+                     dtype_backend='pyarrow',
+                     dtype="string[pyarrow]"
+)
 print(data)
 
 data.columns = [
@@ -50,5 +55,3 @@ data.to_sql(
     if_exists='append',
     index = False,
 )
-
-

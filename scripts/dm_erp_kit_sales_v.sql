@@ -11,8 +11,8 @@ WITH
 			s."Чертежный номер комплекта",
 			s."Отгружено за указанный период",
 			CASE
-				WHEN cnt."Код страны" IN ('031', '051', '112', '398', '417', '498', '643', '762', '860' ) THEN 'СНГ-' || cnt.Страна
-				ELSE 'БЗ-' || cnt.Страна
+				WHEN cnt."Код страны" IN ('031', '051', '112', '398', '417', '498', '643', '762', '860' ) THEN 'СНГ-' || INITCAP(cnt.Страна)
+				ELSE 'БЗ-' || INITCAP(cnt.Страна)
 			END 																	AS "Направление реализации с учетом УКП"
 		FROM sttgaz.dds_erp_kit_sales 												AS s
 		LEFT JOIN sttgaz.dds_erp_counterparty 										AS c 
