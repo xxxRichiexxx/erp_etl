@@ -11,7 +11,16 @@ WITH
 			s."Чертежный номер комплекта",
 			s."Отгружено за указанный период",
 			CASE
-				WHEN cnt."Код страны" IN ('031', '051', '112', '398', '417', '498', '643', '762', '860' ) THEN 'СНГ-' || INITCAP(cnt.Страна)
+				WHEN cnt."Код страны" IS NULL AND c."Контрагент" = 'GAZ THANH DAT LIMITED LIABILITY COMPANY'
+					THEN 'БЗ-Вьетнам'
+				WHEN cnt."Код страны" IS NULL AND c."Контрагент" = 'АО АМЗ'
+					THEN 'РФ-комплекты'
+				WHEN cnt."Код страны" IS NULL AND c."Контрагент" = 'ООО Торговый дом "УГДК"'
+					THEN 'СНГ-Украина' 
+				WHEN cnt."Код страны" IS NULL AND c."Контрагент" = 'ГУ EMPRESA ESTATAL CUBANA IMPORTADORA Y EXPORTADORA DE PRODUCTOS'
+					THEN 'БЗ-Куба' 
+				WHEN cnt."Код страны" IN ('031', '051', '112', '398', '417', '498', '643', '762', '860' ) 
+					THEN 'СНГ-' || INITCAP(cnt.Страна)
 				ELSE 'БЗ-' || INITCAP(cnt.Страна)
 			END 																	AS "Направление реализации с учетом УКП"
 		FROM sttgaz.dds_erp_kit_sales 												AS s
