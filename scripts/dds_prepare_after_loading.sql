@@ -82,7 +82,7 @@ SELECT
 	ApplicationNo														AS "Номер приложения",----
 	NULL 																AS "Месяц контрактации",----
 	TO_DATE(ShipmentMonth, 'MM.YYYY')									AS "Месяц отгрузки", ------------------------Ispravit
-	Equipment  															AS "Комплектация (вариант сборки)",---
+	REGEXP_REPLACE(Equipment, '^\d{1,10}-', '')  						AS "Комплектация (вариант сборки)",---
 	REGEXP_SUBSTR(KitDrawingNumber, '^[A-ZА-Я0-9]{3,6}-\d{7}')			AS "Чертежный номер комплекта",----
 	REGEXP_REPLACE(KitDrawingNumber, '^[A-ZА-Я0-9]{3,6}-\d{7} ', '')	AS "Наименование комплекта",-----
 	REPLACE(DrawingNumberPF, ' ', '')									AS "Чертежный номер полуфабриката кабины",-----

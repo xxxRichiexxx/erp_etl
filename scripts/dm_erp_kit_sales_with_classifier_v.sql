@@ -6,7 +6,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 		Месяц,
 		"Направление реализации с учетом УКП",
 		COALESCE(ks.Дивизион, n.Division)  		AS Дивизион,
-		Manufacture								AS Производитель,
+		Proizvoditel							AS Производитель,
 		property_value_name_1					AS "Классификатор подробно по дивизионам 22",
 		Name 									AS Товар,
 		Code65 									AS ТоварКод65,
@@ -44,10 +44,10 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 			END AS "Завод"
 	FROM sttgaz.dm_erp_kit_sales_v ks
 	LEFT JOIN sttgaz.stage_isc_nomenclature_guide n
-		ON (REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', '') = REGEXP_REPLACE(n.ManufactureModel, '^А', 'A')
+		ON (REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', '') = REGEXP_REPLACE(n.ModelNaZavode, '^А', 'A')
 			OR REPLACE(REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', ''), '-00', '-') = REGEXP_REPLACE(n.Code65 , '^А', 'A'))
-			AND n.ManufactureModel <> ''
-			AND UPPER(REPLACE(n.Manufacture, ' ', '')) = 'ГАЗПАО'
+			AND n.ModelNaZavode <> ''
+			AND UPPER(REPLACE(n.Proizvoditel, ' ', '')) = 'ГАЗПАО'
 			AND n.Name <>'Комплект автомобил'
 			AND n.load_date = DATE_TRUNC('MONTH', NOW())::date
 	LEFT JOIN sttgaz.dm_isc_classifier_v c 
