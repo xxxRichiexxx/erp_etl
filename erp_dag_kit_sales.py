@@ -165,7 +165,7 @@ with DAG(
                 VerticaOperator(
                     task_id=f'{dm}_sheck',
                     vertica_conn_id='vertica',
-                    sql='scripts/dm_erp_kit_sales_and_dm_with_classifier_sheck.sql',
+                    sql='scripts/dm_erp_kit_sales_and_dm_with_classifier_check.sql',
                     params={
                         'dm': dm,
                     }
@@ -176,7 +176,7 @@ with DAG(
                 VerticaOperator(
                     task_id=f'{dm}_sheck_comparison_with_target',
                     vertica_conn_id='vertica',
-                    sql='scripts/dm_erp_kit_sales_and_dm_with_classifier_sheck_comparison_with_target.sql',
+                    sql='scripts/dm_erp_kit_sales_and_dm_with_classifier_check_comparison_with_target.sql',
                     params={
                         'dm': dm,
                     }
