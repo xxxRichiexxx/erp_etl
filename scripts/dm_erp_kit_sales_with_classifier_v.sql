@@ -43,13 +43,13 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 				'Прочее'
 			END AS "Завод"
 	FROM sttgaz.dm_erp_kit_sales_v ks
-	LEFT JOIN sttgaz.stage_isc_nomenclature_guide n
-		ON (REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', '') = REGEXP_REPLACE(n.ModelNaZavode, '^А', 'A')
-			OR REPLACE(REPLACE(REGEXP_REPLACE(ks."Чертежный номер комплекта", '^А', 'A'), ' ', ''), '-00', '-') = REGEXP_REPLACE(n.Code65 , '^А', 'A'))
-			AND n.ModelNaZavode <> ''
-			AND UPPER(REPLACE(n.Proizvoditel, ' ', '')) = 'ГАЗПАО'
-			AND n.Name <>'Комплект автомобил'
-			AND n.load_date = DATE_TRUNC('MONTH', NOW())::date
+	LEFT JOIN sttgaz.dds_isc_nomenclature_guide n
+		ON s."Чертежный номер комплекта" = n."Модель на заводе"
+				OR s."Чертежный номер комплекта" = REGEXP_REPLACE(n.Код65, '^А', 'A')
+				OR s."Чертежный номер комплекта" = REGEXP_REPLACE(n.Код65, '^С', 'C')
+			AND n."Модель на заводе" <> ''
+			AND UPPER(REPLACE(n."Производитель", ' ', '')) = 'ГАЗПАО'
+			AND n."Наименование" <>'Комплект автомобил'
 	LEFT JOIN sttgaz.dm_isc_classifier_v c 
 		ON REGEXP_REPLACE(n.Code65, '^А', 'A') = REGEXP_REPLACE(c.product_name, '^А', 'A') 
 			AND c.property_name = 'Подробный по дивизионам (с 2022 г)';
