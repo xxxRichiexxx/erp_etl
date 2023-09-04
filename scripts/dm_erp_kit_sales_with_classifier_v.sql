@@ -51,7 +51,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 			AND UPPER(REPLACE(n."Производитель", ' ', '')) = 'ГАЗПАО'
 			AND n."Наименование" <>'Комплект автомобил'
 	LEFT JOIN sttgaz.dm_isc_classifier_v c 
-		ON REGEXP_REPLACE(n.Code65, '^А', 'A') = REGEXP_REPLACE(c.product_name, '^А', 'A') 
+		ON REGEXP_REPLACE(n.Код65, '^А', 'A') = REGEXP_REPLACE(c.product_name, '^А', 'A') 
 			AND c.property_name = 'Подробный по дивизионам (с 2022 г)';
 
 GRANT SELECT ON TABLE sttgaz.dm_erp_kit_sales_with_classifier_v TO PowerBI_Integration WITH GRANT OPTION;
