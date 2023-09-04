@@ -155,25 +155,34 @@ with DAG(
         
     with TaskGroup('Проверки') as data_checks:
 
-        dm_erp_kit_sales_sheck = VerticaOperator(
-                    task_id='dm_erp_kit_sales_sheck',
+        checks = []
+
+        datamarts = ['dm_erp_kit_sales_v', 'dm_erp_kit_sales_with_classifier_v']
+
+        for dm in datamarts:
+
+            checks.append(
+                VerticaOperator(
+                    task_id=f'{dm}_sheck',
                     vertica_conn_id='vertica',
-                    sql='scripts/dm_erp_kit_sales_sheck.sql',
+                    sql=f'scripts/dm_erp_kit_sales_and_dm_with_classifier_sheck.sql',
                     params={
-                        'dm': 'dm_erp_kit_sales_v',
+                        'dm': dm,
                     }
                 )
-        
-        dm_erp_kit_sales_with_classifier = VerticaOperator(
-                    task_id='dm_erp_kit_sales_with_classifier_sheck',
+            )
+
+            checks.append(
+                VerticaOperator(
+                    task_id=f'{dm}_sheck_comparison_with_target',
                     vertica_conn_id='vertica',
-                    sql='scripts/dm_erp_kit_sales_with_classifier_sheck.sql',
+                    sql='scripts/dm_erp_kit_sales_and_dm_with_classifier_sheck_comparison_with_target.sql',
                     params={
-                        'dm': 'dm_erp_kit_sales_with_classifier_v',
+                        'dm': dm,
                     }
                 )
-        
-        [dm_erp_kit_sales_sheck, dm_erp_kit_sales_with_classifier]
+                
+        checks
 
     end = DummyOperator(task_id='Конец')
 
