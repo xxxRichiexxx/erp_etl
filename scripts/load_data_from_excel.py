@@ -4,8 +4,8 @@ from urllib.parse import quote
 import numpy as np
 
 
-data = pd.read_excel(r"C:\Users\shveynikovab\Desktop\Факт реализации автокомплектов за 7 мес 2022.xlsx",
-                     sheet_name = 'Лист1 (2)',
+data = pd.read_excel(r"C:\Users\shveynikovab\Desktop\PRKOMPOT.xlsb",
+                     sheet_name = 'Лист1',
                      dtype_backend='pyarrow',
                      dtype="string[pyarrow]"
 )

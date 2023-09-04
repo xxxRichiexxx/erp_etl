@@ -93,7 +93,10 @@ SELECT
 	Discount															AS "Скидка (процент)",--------
 	DiscountedPackagePrice 												AS "Цена комплекта с учетом скидки",----
 	PFCabinsQuantity													AS "Отгружено за указанный период",-------
-	ROUND(100*PFCabinsQuantity/Quantity, 0)								AS "Процент выполнения",------
+	CASE
+		WHEN Quantity IS NOT NULL AND Quantity <> 0
+		THEN ROUND(100*PFCabinsQuantity/Quantity, 0)
+	END 																AS "Процент выполнения",------							
 	TheAmountOfRealtionInPurchasePrices									AS "Сумма реал-ции в приходных ценах, руб.",-----
 	AmountOfRealtionPFCabins + AmountOfRealtionPlacer 
 		- TheAmountOfRealtionInPurchasePrices							AS "Выручка",--------
@@ -108,5 +111,4 @@ FROM source_data AS d
 LEFT JOIN sttgaz.dds_erp_counterparty AS c 
 	ON d.Counterparty = c.Контрагент 
 LEFT JOIN sttgaz.dds_erp_сountry AS cnt 
-	ON d.Country =  cnt.Страна 
-
+	ON d.Country =  cnt.Страна;

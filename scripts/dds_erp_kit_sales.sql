@@ -43,7 +43,7 @@ SELECT
         TO_DATE("ApplicationContractingMonth", 'DD:MM:YYYY'),
         TO_DATE("ShipmentMonth", 'DD:MM:YYYY'),
         "Equipment",
-        REGEXP_REPLACE("KitDrawingNumber", '^А', 'A'),
+        REGEXP_REPLACE(REGEXP_REPLACE("KitDrawingNumber", '^А', 'A'), '^С', 'C'),
         "KitName",
         "DrawingNumberPF",
         d.id,
