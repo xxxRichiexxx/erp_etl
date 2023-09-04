@@ -45,8 +45,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 	FROM sttgaz.dm_erp_kit_sales_v s
 	LEFT JOIN sttgaz.dds_isc_nomenclature_guide n
 		ON (s."Чертежный номер комплекта" = n."Модель на заводе"
-				OR REPLACE(s."Чертежный номер комплекта", '-00', '-')= REGEXP_REPLACE(n.Код65, '^А', 'A')
-				OR REPLACE(s."Чертежный номер комплекта", '-00', '-') = REGEXP_REPLACE(n.Код65, '^С', 'C')
+				OR REPLACE(s."Чертежный номер комплекта", '-00', '-')= REGEXP_REPLACE(REGEXP_REPLACE(n.Код65, '^А', 'A'), '^С', 'C')
 			AND n."Модель на заводе" <> '')
 			AND UPPER(REPLACE(n."Производитель", ' ', '')) = 'ГАЗПАО'
 			AND n."Наименование" <>'Комплект автомобил'
