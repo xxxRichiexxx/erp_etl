@@ -1,11 +1,10 @@
 import pandas as pd
 import sqlalchemy as sa
 from urllib.parse import quote
-import numpy as np
 
 
 data = pd.read_excel(r"C:\Users\shveynikovab\Desktop\PRKOMPOT.xlsb",
-                     sheet_name = 'Лист1',
+                     sheet_name='Лист1',
                      dtype_backend='pyarrow',
                      dtype="string[pyarrow]"
 )
@@ -24,11 +23,11 @@ data.columns = [
         "Quantity",
         "Currency",
         "Course",
-        "KitPrice", 
+        "KitPrice",
         "Discount",
         "DiscountedPackagePrice",
         "PFCabinsQuantity",
-        "AmountOfRealtionPFCabins", 
+        "AmountOfRealtionPFCabins",
         "AmountOfRealtionPlacer",
         "Torg12No",
         "Torg12Date",
@@ -51,7 +50,7 @@ engine_2 = sa.create_engine(
 data.to_sql(
     'stage_ADABAS_kit_sales',
     engine_2,
-    schema = 'sttgaz',
+    schema='sttgaz',
     if_exists='append',
-    index = False,
+    index=False,
 )

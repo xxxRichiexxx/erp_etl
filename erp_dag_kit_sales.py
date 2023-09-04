@@ -19,7 +19,7 @@ source_username = source_con.login
 source_password = quote(source_con.password)
 api_endpoint = source_con.host
 
-auth=(source_username, source_password)
+auth = (source_username, source_password)
 
 column_names = [
         "Counterparty",
@@ -83,7 +83,7 @@ with DAG(
 
         tasks = []
 
-        for offset in range(0,6):
+        for offset in range(0, 6):
             tasks.append(
                 PythonOperator(
                     task_id=f'get_kit_sales_offset_{offset}',
@@ -105,7 +105,7 @@ with DAG(
 
     with TaskGroup('Загрузка_данных_в_dds_слой') as data_to_dds:
 
-        tables=[
+        tables = [
             'dds_erp_counterparty',
             'dds_erp_сountry',
             'dds_erp_division',
@@ -152,7 +152,7 @@ with DAG(
                     sql='scripts/dm_erp_kit_sales_with_classifier_v.sql',
                 )
         [dm_erp_kit_sales_v, dm_erp_kit_sales_with_classifier_v]
-        
+
     with TaskGroup('Проверки') as data_checks:
 
         checks = []
@@ -165,7 +165,7 @@ with DAG(
                 VerticaOperator(
                     task_id=f'{dm}_sheck',
                     vertica_conn_id='vertica',
-                    sql=f'scripts/dm_erp_kit_sales_and_dm_with_classifier_sheck.sql',
+                    sql='scripts/dm_erp_kit_sales_and_dm_with_classifier_sheck.sql',
                     params={
                         'dm': dm,
                     }
@@ -182,7 +182,7 @@ with DAG(
                     }
                 )
             )
-                
+
         checks
 
     end = DummyOperator(task_id='Конец')
