@@ -5,11 +5,11 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 	SELECT
 		Месяц,
 		"Направление реализации с учетом УКП",
-		COALESCE(ks.Дивизион, n.Division)  		AS Дивизион,
-		Proizvoditel							AS Производитель,
+		COALESCE(s.Дивизион, n.Дивизион)  		AS Дивизион,
+		Производитель							AS Производитель,
 		property_value_name_1					AS "Классификатор подробно по дивизионам 22",
-		Name 									AS Товар,
-		Code65 									AS ТоварКод65,
+		Наименование 							AS Товар,
+		Код65 									AS ТоварКод65,
 		"Реализовано",
 		NULL::NUMERIC(12,2) 					AS "Оборот",
 		NULL::NUMERIC(12,2) 					AS "Оборот без НДС",
@@ -42,7 +42,7 @@ CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_with_classifier_v AS
 			ELSE
 				'Прочее'
 			END AS "Завод"
-	FROM sttgaz.dm_erp_kit_sales_v ks
+	FROM sttgaz.dm_erp_kit_sales_v s
 	LEFT JOIN sttgaz.dds_isc_nomenclature_guide n
 		ON s."Чертежный номер комплекта" = n."Модель на заводе"
 				OR s."Чертежный номер комплекта" = REGEXP_REPLACE(n.Код65, '^А', 'A')
