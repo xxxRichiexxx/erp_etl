@@ -8,8 +8,14 @@ INSERT INTO sttgaz.dm_erp_contracting
 WITH 
 	base_query AS(
 		 SELECT
-			*
-			,CASE
+			"Месяц контрактации",
+			"Месяц отгрузки",
+			NULL																								AS "Дилер",
+			'ГАЗ ПАО ' 																							AS "Производитель",
+			NULL                                                    											AS "Город",
+			'Неизвестно'                                                   										AS "Вид оплаты",
+			'Комплекты'                             															AS "Вид продукции",
+			CASE
 				WHEN cnt."Код страны" IS NULL AND c."Контрагент" = 'GAZ THANH DAT LIMITED LIABILITY COMPANY'
 					THEN 'БЗ-Вьетнам'
 				WHEN cnt."Код страны" IS NULL AND c."Контрагент" = 'АО АМЗ'
@@ -21,13 +27,15 @@ WITH
 				WHEN cnt."Код страны" IN ('031', '051', '112', '398', '417', '498', '643', '762', '860' ) 
 					THEN 'СНГ-' || INITCAP(cnt.Страна)
 				ELSE 'БЗ-' || INITCAP(cnt.Страна)
-			END 																	AS "Направление реализации с учетом УКП"
-		FROM sttgaz.dds_erp_kit_sales 												AS s
-		LEFT JOIN sttgaz.dds_erp_counterparty 										AS c 
+			END 																								AS "Направление реализации",
+			"Отгружено за указанный период"																		AS "Количество",
+			HASH("Направление реализации", "Дилер", "Производитель", "Город", "Вид оплаты", "Вид продукции") 	AS key 	
+		FROM sttgaz.dds_erp_kit_sales 																			AS s
+		LEFT JOIN sttgaz.dds_erp_counterparty 																	AS c 
 			ON s."Контрагент ID" = c.id 
-		LEFT JOIN sttgaz.dds_erp_сountry 											AS cnt 
+		LEFT JOIN sttgaz.dds_erp_сountry 																		AS cnt 
 			ON s."Страна ID"  = cnt.id
-		LEFT JOIN sttgaz.dds_erp_division 											AS d 
+		LEFT JOIN sttgaz.dds_erp_division 																		AS d 
 			ON s."Дивизион ID" = d.id 	
         WHERE s."Месяц отгрузки" > DATE_TRUNC('month', '{execution_date}'::date - INTERVAL '8 month')::date
 
@@ -35,13 +43,13 @@ WITH
 	matrix AS(
 		SELECT DISTINCT 
 			'{execution_date}'::date								AS "Период",
-			"Направление реализации с учетом УКП"					AS "Направление реализации",
-			"Контрагент"											AS "Дилер",
-			Производитель,      ----?
-			NULL                                                    AS "Город",
-			NULL                                                    AS "Вид оплаты",
-			"Наименование комплекта"                              	AS "Вид продукции",
-			key                 -----?
+			"Направление реализации",
+			"Дилер",
+			"Производитель",    
+			"Город",
+			"Вид оплаты",
+			"Вид продукции",
+			key                       -----?
 		FROM base_query
 	),
 	sq1 AS(
@@ -104,8 +112,20 @@ WITH
 	),
 	sq7 AS(
 		SELECT
-			*,
-			HASH("Направление реализации", "Дилер", "Производитель", "Город", "Вид оплаты", "Вид продукции") AS key 
+			"Дата",
+			ts,
+			"Направление реализации",
+			NULL 																								AS "Дилер",
+			"Производитель",
+			NULL 																								AS "Город",
+			"Вид оплаты",
+			"Вид продукции",
+			HASH("Направление реализации", "Дилер", "Производитель", "Город", "Вид оплаты", "Вид продукции") 	AS key,
+			SUM("План контрактации")																			AS "План контрактации",
+			SUM("План контрактации. Неделя 1")																	AS "План контрактации. Неделя 1",
+			SUM("План контрактации. Неделя 2")																	AS "План контрактации. Неделя 2",
+			SUM("План контрактации. Неделя 3")																	AS "План контрактации. Неделя 3",
+			SUM("План контрактации. Неделя 4")																	AS "План контрактации. Неделя 4"
 		FROM sttgaz.dm_isc_contracting_plan
 		WHERE DATE_TRUNC('minute', ts) = (
 				SELECT DATE_TRUNC('minute', MIN(ts))
@@ -113,6 +133,16 @@ WITH
 				WHERE "Дата" = '{plan_date}'
 			)
 			AND "Дата" = '{plan_date}'
+			AND "Вид продукции" = 'Комплекты'
+		GROUP BY "Дата",
+				 ts,
+				 "Направление реализации",
+				 "Дилер",
+				 "Производитель",
+				 "Город",
+				 "Вид оплаты",
+				 "Вид продукции",
+				 key
 	)
 SELECT
 	COALESCE(m."Период", DATE_TRUNC('MONTH', sq7.Дата))					AS "Период",
