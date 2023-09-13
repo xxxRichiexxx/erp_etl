@@ -160,6 +160,7 @@ CREATE TABLE sttgaz.dm_erp_contracting(
 ORDER BY "Период", "Направление реализации"
 PARTITION BY DATE_TRUNC('month', "Период");
 
+GRANT SELECT ON TABLE sttgaz.dm_erp_contracting TO PowerBI_Integration WITH GRANT OPTION;
 COMMENT ON TABLE sttgaz.dm_erp_contracting IS 'Контрактация по автокомплектам. Витрина данных с посчитанными метриками.';
 
    	
