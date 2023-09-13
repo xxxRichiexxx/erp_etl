@@ -4,6 +4,7 @@ import datetime as dt
 import requests
 from pprint import pprint
 import os
+from sqlalchemy import text
 
 
 def extract(
@@ -177,3 +178,37 @@ def etl(
             key=data_type,
             value=value
         )
+
+
+
+def contracting_calculate(dwh_engine, data_type, monthly_tasks=False, **context):
+    """Запускаем Перерасчет витрины за текущий или предыдущий месяц."""
+    if monthly_tasks:
+        execution_date = (context['execution_date'].date().replace(day=1) - dt.timedelta(days=1)) \
+                            .replace(day=1)
+        plan_date = (context['execution_date'].date().replace(day=1) - dt.timedelta(days=1)) \
+                            .replace(day=20)
+    else:
+        execution_date = context['execution_date'].date().replace(day=1)
+
+        if 1 <= context['execution_date'].day <= 9:
+            plan_date = context['execution_date'].date().replace(day=1)
+        elif 10 <= context['execution_date'].day <= 19:
+            plan_date = context['execution_date'].date().replace(day=10)
+        else:
+            plan_date = context['execution_date'].date().replace(day=20)            
+
+    with open(
+        fr'/home/da/airflow/dags/erp_etl/scripts/dm_erp_{data_type}.sql', 'r'
+    ) as f:
+        command = f.read().format(
+            execution_date=execution_date,
+            next_month=(execution_date.replace(day=28) + dt.timedelta(days=4)).replace(day=1),
+            previous_month=(execution_date - dt.timedelta(days=1)).replace(day=1),
+            plan_date=plan_date,
+        )
+
+    print(command)
+
+    for statement in command.split(';'):
+        dwh_engine.execute(text(statement))

@@ -11,7 +11,7 @@ from airflow.hooks.base import BaseHook
 from airflow.operators.dummy import DummyOperator
 from airflow.contrib.operators.vertica_operator import VerticaOperator
 
-from erp_etl.scripts.collable import etl
+from erp_etl.scripts.collable import etl, contracting_calculate
 
 
 source_con = BaseHook.get_connection('erp')
@@ -151,7 +151,17 @@ with DAG(
                     vertica_conn_id='vertica',
                     sql='scripts/dm_erp_kit_sales_with_classifier_v.sql',
                 )
-        [dm_erp_kit_sales_v, dm_erp_kit_sales_with_classifier_v]
+        
+        dm_erp_contracting = PythonOperator(
+            task_id=f'dm_erp_contracting',
+            python_callable=contracting_calculate,
+            op_kwargs={
+                'data_type': 'contracting',
+                'dwh_engine': dwh_engine,
+            },
+        )
+
+        [dm_erp_kit_sales_v, dm_erp_kit_sales_with_classifier_v, dm_erp_contracting]
 
     with TaskGroup('Проверки') as data_checks:
 
