@@ -72,7 +72,7 @@ WITH
 		 					- ROUND(SUM(Количество)*0.05, 0)
 		 					- ROUND(SUM(Количество)*0.2, 0)		AS "План контрактации. Неделя 4"
 		FROM base_query
-		WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") = DATE_TRUNC('MONTH', '{execution_date}') ----execution_date - priveden k nf4alu mesiatsa
+		WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") = DATE_TRUNC('MONTH', '{execution_date}'::date) ----execution_date - priveden k nf4alu mesiatsa
 		GROUP BY key	
 	),
 	sq3 AS(
@@ -80,7 +80,7 @@ WITH
 		    key,
 		 	SUM(Количество) 									AS "Факт выдачи ОР"
 		FROM base_query
-		WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") = DATE_TRUNC('MONTH', '{execution_date}') ----execution_date - priveden k nf4alu mesiatsa
+		WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") = DATE_TRUNC('MONTH', '{execution_date}'::date) ----execution_date - priveden k nf4alu mesiatsa
 		GROUP BY key
 	),
 	sq4 AS(
@@ -88,8 +88,8 @@ WITH
 			key,
 		 	SUM(Количество) 									AS "Догруз на конец месяца"
 		 FROM base_query
-		 WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") <= DATE_TRUNC('MONTH', '{execution_date}')
-			AND DATE_TRUNC('MONTH', "Месяц контрактации") > DATE_TRUNC('MONTH', '{execution_date}')
+		 WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") <= DATE_TRUNC('MONTH', '{execution_date}'::date)
+			AND DATE_TRUNC('MONTH', "Месяц контрактации") > DATE_TRUNC('MONTH', '{execution_date}'::date)
 		 GROUP BY key
 	),
 	sq5 AS(
@@ -98,7 +98,7 @@ WITH
 		 	SUM(Количество) 									AS "Отгрузка в счет следующего месяца" 
 		 FROM base_query
 		 WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") = '{next_month}' 
-		 	AND DATE_TRUNC('MONTH', "Месяц контрактации") = DATE_TRUNC('MONTH', '{execution_date}')
+		 	AND DATE_TRUNC('MONTH', "Месяц контрактации") = DATE_TRUNC('MONTH', '{execution_date}'::date)
 		GROUP BY key
 	),
 	sq6 AS(
@@ -106,7 +106,7 @@ WITH
 			key,
 		 	SUM(Количество) 									AS "Отгрузка в предыдущем месяце из плана текущего месяца" 
 		 FROM base_query
-		 WHERE DATE_TRUNC('MONTH', "Месяц отгрузки")::date = DATE_TRUNC('MONTH', '{execution_date}')::date
+		 WHERE DATE_TRUNC('MONTH', "Месяц отгрузки")::date = DATE_TRUNC('MONTH', '{execution_date}'::date)::date
 		 	AND DATE_TRUNC('MONTH', "Месяц контрактации")::date = '{previous_month}' 
 		GROUP BY key
 	),
