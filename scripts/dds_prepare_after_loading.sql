@@ -1,3 +1,11 @@
+BEGIN;
+
+SELECT DROP_PARTITIONS(
+	'sttgaz.dds_erp_kit_sales',                           
+	'2015-01-01',
+	'2022-07-01'
+);
+
 INSERT INTO sttgaz.dds_erp_kit_sales 
 	("Контрагент ID", ---
 	 "Договор",----
@@ -118,3 +126,5 @@ LEFT JOIN sttgaz.dds_erp_counterparty AS c
 	ON d.Counterparty = c.Контрагент 
 LEFT JOIN sttgaz.dds_erp_сountry AS cnt 
 	ON d.Country =  cnt.Страна;
+
+COMMIT;

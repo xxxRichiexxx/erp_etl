@@ -80,7 +80,7 @@ WITH
 		    key,
 		 	SUM(Количество) 									AS "Факт выдачи ОР"
 		FROM base_query
-		WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") <= DATE_TRUNC('MONTH', '{execution_date}'::date) ----execution_date - priveden k nf4alu mesiatsa
+		WHERE DATE_TRUNC('MONTH', "Месяц отгрузки") = DATE_TRUNC('MONTH', '{execution_date}'::date) ----execution_date - priveden k nf4alu mesiatsa
 		GROUP BY key
 	),
 	sq4 AS(
