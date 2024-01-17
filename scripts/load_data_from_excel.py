@@ -11,7 +11,6 @@ data = pd.read_excel(r"C:\Users\shveynikovab\Desktop\Факт реализаци
 print(data)
 
 data.columns = [
-        "Application_ID"
         "Counterparty",
         "Treaty",
         "ApplicationNo",
