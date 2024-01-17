@@ -41,7 +41,7 @@ SELECT
         "TreatyID",
         cnt.id,
         "ApplicationNo",
-        "Application_ID",
+        "ApplicationID",
         TO_DATE("ApplicationContractingMonth", 'DD:MM:YYYY'),
         TO_DATE("ShipmentMonth", 'DD:MM:YYYY'),
         "Equipment",

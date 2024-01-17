@@ -1,7 +1,7 @@
 ------------------------------stage------------------------------------------
 DROP TABLE IF EXISTS sttgaz.stage_erp_kit_sales;
 CREATE TABLE sttgaz.stage_erp_kit_sales(
-        "Application_ID" varchar(1000),
+        "ApplicationID" varchar(1000),
         "Counterparty" varchar(1000),
         "CounterpartyID" varchar(1000),
         "Treaty" varchar(1000),
