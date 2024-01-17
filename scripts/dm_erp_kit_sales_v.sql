@@ -1,6 +1,5 @@
 BEGIN TRANSACTION;
 
-DROP VIEW IF EXISTS sttgaz.dm_erp_kit_sales_v;
 CREATE OR REPLACE VIEW sttgaz.dm_erp_kit_sales_v AS
 WITH 
 	sq1 AS(
