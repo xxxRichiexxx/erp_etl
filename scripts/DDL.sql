@@ -1,6 +1,7 @@
 ------------------------------stage------------------------------------------
 DROP TABLE IF EXISTS sttgaz.stage_erp_kit_sales;
 CREATE TABLE sttgaz.stage_erp_kit_sales(
+        "Application_ID" varchar(1000),
         "Counterparty" varchar(1000),
         "CounterpartyID" varchar(1000),
         "Treaty" varchar(1000),
@@ -102,6 +103,7 @@ CREATE TABLE sttgaz.dds_erp_kit_sales(
         "Договор ID" varchar(1000),
         "Страна ID" INT REFERENCES sttgaz.dds_erp_сountry(id),
         "Номер приложения" varchar(1000),
+        "Приложение ID" varchar(1000),
         "Месяц контрактации" date,
         "Месяц отгрузки" date,
         "Комплектация (вариант сборки)" varchar(1000),
