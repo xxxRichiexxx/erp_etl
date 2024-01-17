@@ -6,7 +6,7 @@ WITH
 		SELECT
 			Период 																	AS "Месяц",
 			d.Наименование 															AS "Дивизион",
-			c."Сборочный завод в ИСК"												AS "Контрагент",
+			c."Контрагент"															AS "Контрагент",
 			s."Чертежный номер комплекта",
 			s."Комплектация (вариант сборки)"										AS "Вариант сборки",
 			s."Отгружено за указанный период",
@@ -108,6 +108,6 @@ WHERE "Реализовано" IS NOT NULL
 	OR "Реализовано АППГ" IS NOT NULL;
 
 GRANT SELECT ON TABLE sttgaz.dm_erp_kit_sales_v TO PowerBI_Integration WITH GRANT OPTION;
-COMMENT ON VIEW sttgaz.dm_erp_kit_sales_v IS 'Реализация автокомплектов. Витрина данных с посчитанными метриками.';	
+COMMENT ON VIEW sttgaz.dm_erp_kit_sales_v IS 'Реализация автокомплектов. Витрина данных с посчитанными метриками.';
 
 COMMIT TRANSACTION;
