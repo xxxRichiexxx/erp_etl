@@ -51,18 +51,18 @@ CREATE TABLE sttgaz.stage_ADABAS_kit_sales(
         "Quantity" numeric(6,3),
         "Currency" varchar(100),
         "Course" varchar(1000),
-        "KitPrice" numeric(12,3), 
+        "KitPrice" numeric(13,3), 
         "Discount" numeric(6,3),
-        "DiscountedPackagePrice" numeric(12,3),
+        "DiscountedPackagePrice" numeric(13,3),
         "PFCabinsQuantity" int,
-        "AmountOfRealtionPFCabins" numeric(12,3), 
-        "AmountOfRealtionPlacer" numeric(12,3),
+        "AmountOfRealtionPFCabins" numeric(13,3), 
+        "AmountOfRealtionPlacer" numeric(13,3),
         "Torg12No" varchar(1000),
         "Torg12Date" varchar(1000),
         "InvoiceNo" varchar(1000),
         "InvoiceDate" varchar(1000),
         "Specification" varchar(1000),
-        "TheAmountOfRealtionInPurchasePrices" numeric(12,3),
+        "TheAmountOfRealtionInPurchasePrices" numeric(13,3),
         "PPSDate" varchar(1000)
 );
 
